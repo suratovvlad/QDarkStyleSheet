@@ -5,6 +5,8 @@ A dark style sheet for QtWidgets application.
 """
 
 # Standard library imports
+import glob
+import os
 from setuptools import find_packages, setup
 
 # Local imports
@@ -19,6 +21,20 @@ extras_require = {
     'example': ['pyqt5', 'pyside2']
 }
 
+
+def remove_all(dir_path, patterns='*.pyc'):
+    """Remove all files from `dir_path` matching the `patterns`.
+
+    Args:
+        dir_path (str): Directory path.
+        patterns (str): Pattern using regex. Defaults to '*.pyc'.
+    """
+
+    for pattern in patterns:
+        for filename in glob.iglob(dir_path + '/**/' + pattern, recursive=True):
+            os.remove(filename)
+
+
 setup(
     name='QDarkStyle',
     version=__version__,
@@ -29,6 +45,7 @@ setup(
     author_email='colin.duquesnoy@gmail.com',
     description='The most complete dark stylesheet for Python and Qt applications',
     long_description=long_desc,
+    long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: X11 Applications :: Qt',
